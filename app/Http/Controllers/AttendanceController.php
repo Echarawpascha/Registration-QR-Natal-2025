@@ -28,13 +28,13 @@ class AttendanceController extends Controller
             ], 404);
         }
 
-        // Check if peserta is confirmed
-        if (!$peserta->is_confirmed) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Peserta belum dikonfirmasi.',
-            ], 400);
-        }
+        // Remove check for peserta is_confirmed here, scanning is the confirmation step
+        // if (!$peserta->is_confirmed) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Peserta belum dikonfirmasi.',
+        //     ], 400);
+        // }
 
         // Check if attendance already exists for today
         $existingAttendance = Attendance::where('peserta_id', $peserta->id)
@@ -60,6 +60,12 @@ class AttendanceController extends Controller
             'status' => 'present',
             'scanned_at' => now(),
         ]);
+
+        // Update peserta is_confirmed to true after scanning
+        if (!$peserta->is_confirmed) {
+            $peserta->is_confirmed = true;
+            $peserta->save();
+        }
 
         return response()->json([
             'success' => true,

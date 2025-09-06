@@ -34,7 +34,7 @@ class PesertaAuthController extends Controller
             'phone' => $request->phone,
             'address' => $request->address,
             'barcode' => $barcode,
-            'is_confirmed' => true, // langsung konfirmasi untuk tahap awal
+            'is_confirmed' => false, // set to false initially, will be confirmed after scanning
         ]);
 
         Auth::guard('peserta')->login($peserta);
@@ -67,6 +67,8 @@ class PesertaAuthController extends Controller
     public function dashboard()
     {
         $peserta = Auth::guard('peserta')->user();
+        // Refresh peserta data to get latest is_confirmed status after scanning
+        $peserta->refresh();
         return view('peserta.dashboard', compact('peserta'));
     }
 
