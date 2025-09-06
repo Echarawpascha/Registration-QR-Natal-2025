@@ -35,7 +35,7 @@
         </ul>
         <div class="profile-section">
             <button class="profile-button">
-                <img src="{{ Auth::guard('panitia')->user()->profile_image ? asset('storage/' . Auth::guard('panitia')->user()->profile_image) : 'https://via.placeholder.com/40x40/cccccc/666666?text=PN' }}" alt="Profile" class="profile-image">
+                <img src="{{ Auth::guard('panitia')->user()->profile_image ? asset('storage/' . Auth::guard('panitia')->user()->profile_image) : asset('storage/profile_images/profile.png') }}" alt="Profile" class="profile-image">
                 <div class="profile-info">
                     <p class="name">{{ Auth::guard('panitia')->user()->name }}</p>
                     <p class="role">Panitia</p>

@@ -20,6 +20,7 @@ Route::prefix('peserta')->group(function () {
         Route::get('barcode', [PesertaAuthController::class, 'barcode'])->name('peserta.barcode');
         Route::get('settings', [PesertaAuthController::class, 'settings'])->name('peserta.settings');
         Route::post('settings', [PesertaAuthController::class, 'updateSettings'])->name('peserta.updateSettings');
+        Route::post('remove-profile-image', [PesertaAuthController::class, 'removeProfileImage'])->name('peserta.removeProfileImage');
         Route::post('logout', [PesertaAuthController::class, 'logout'])->name('peserta.logout');
     });
 });
@@ -34,6 +35,7 @@ Route::prefix('panitia')->group(function () {
         Route::get('dashboard', [PanitiaAuthController::class, 'dashboard'])->name('panitia.dashboard');
         Route::get('settings', [PanitiaAuthController::class, 'settings'])->name('panitia.settings');
         Route::post('settings', [PanitiaAuthController::class, 'updateSettings'])->name('panitia.updateSettings');
+        Route::post('remove-profile-image', [PanitiaAuthController::class, 'removeProfileImage'])->name('panitia.removeProfileImage');
         Route::post('logout', [PanitiaAuthController::class, 'logout'])->name('panitia.logout');
 
         // Attendance routes
@@ -52,6 +54,7 @@ Route::prefix('admin')->group(function () {
         Route::get('dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('settings', [AdminAuthController::class, 'settings'])->name('admin.settings');
         Route::post('settings', [AdminAuthController::class, 'updateSettings'])->name('admin.updateSettings');
+        Route::post('remove-profile-image', [AdminAuthController::class, 'removeProfileImage'])->name('admin.removeProfileImage');
         Route::post('panitia/{id}/approve', [AdminAuthController::class, 'approvePanitia'])->name('admin.approve-panitia');
         Route::post('panitia/{id}/reject', [AdminAuthController::class, 'rejectPanitia'])->name('admin.reject-panitia');
         Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');

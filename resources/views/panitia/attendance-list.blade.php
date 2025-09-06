@@ -3,49 +3,248 @@
 @section('title', 'Daftar Absensi')
 
 @section('content')
-    <h3>Daftar Absensi Hari Ini</h3>
-    <div id="attendance-list" style="margin-top: 20px;">
-        <p>Loading...</p>
+<div class="container mx-auto px-4 py-8">
+    <div class="attendance-card">
+        <h3 class="title">Daftar Absensi Hari Ini</h3>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Cari berdasarkan nama peserta..." class="search-input">
+            </div>
+        </div>
+
+        <div id="attendance-list">
+            <div class="loading">
+                <div class="pulse"></div>
+                <p>Memuat data absensi...</p>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script>
-        function loadTodayAttendances() {
-            fetch('/panitia/attendances/today', {
-                method: 'GET',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    let html = '<table border="1" style="width:100%; border-collapse: collapse;">';
-                    html += '<tr><th>Nama Peserta</th><th>Waktu Scan</th><th>Status</th></tr>';
+<style>
+/* Card utama */
+.attendance-card {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
 
-                    if (data.data.length > 0) {
-                        data.data.forEach(attendance => {
-                            html += `<tr>
-                                <td>${attendance.peserta_name}</td>
-                                <td>${attendance.scanned_at}</td>
-                                <td>${attendance.status}</td>
-                            </tr>`;
-                        });
-                    } else {
-                        html += '<tr><td colspan="3" style="text-align:center;">Belum ada absensi hari ini</td></tr>';
-                    }
+/* Judul */
+.attendance-card .title {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+}
 
-                    html += '</table>';
-                    document.getElementById('attendance-list').innerHTML = html;
-                }
-            })
-            .catch(error => {
-                console.error('Error loading attendances:', error);
-            });
+/* Search Bar */
+.search-container {
+    margin-bottom: 1.5rem;
+}
+
+.search-input-wrapper {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #9ca3af;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    background-color: #f9fafb;
+    color: #374151;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.search-input::placeholder {
+    color: #9ca3af;
+}
+
+/* Loading */
+.loading {
+    text-align: center;
+    padding: 2rem 0;
+    color: #9ca3af;
+}
+.loading .pulse {
+    height: 1rem;
+    width: 70%;
+    margin: 0 auto 0.5rem auto;
+    background: #e5e7eb;
+    border-radius: 9999px;
+    animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* Tabel */
+.attendance-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.attendance-table thead {
+    /* Gradasi header merah → hijau */
+    background: linear-gradient( #22c55e);
+    color: white;
+}
+
+.attendance-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.attendance-table tbody tr {
+    background-color: #ffffff;
+    transition: background-color 0.2s;
+}
+
+.attendance-table tbody tr:hover {
+    background-color: #eff6ff;
+}
+
+.attendance-table td {
+    padding: 0.75rem 1rem;
+    color: #374151;
+    vertical-align: middle;
+}
+
+/* Foto profil */
+.attendance-table img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #e5e7eb;
+}
+
+/* Status hijau untuk Present/Hadir */
+.status-present {
+    color: #ffffff;
+    background-color: #22c55e;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    display: inline-block;
+    font-size: 0.75rem;
+}
+</style>
+
+<script>
+function loadTodayAttendances() {
+    fetch('/panitia/attendances/today', {
+        method: 'GET',
+        headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            // Store original data for search functionality
+            originalData = data.data;
+            renderTable(data.data);
         }
+    })
+    .catch(console.error);
+}
 
-        // Load attendances on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTodayAttendances();
+let originalData = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadTodayAttendances();
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+
+        if (searchTerm === '') {
+            // Show all data if search is empty
+            renderTable(originalData);
+        } else {
+            // Filter data based on search term (primarily by name)
+            const filteredData = originalData.filter(item => {
+                const name = item.peserta_name || '';
+                return name.toLowerCase().includes(searchTerm);
+            });
+            renderTable(filteredData);
+        }
+    });
+});
+
+function renderTable(data) {
+    let html = '<table class="attendance-table">';
+    html += `
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Foto Profil</th>
+                <th>Nama Peserta</th>
+                <th>Waktu Scan</th>
+                <th>Nomor Telepon</th>
+                <th>Email</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>`;
+
+    if(data.length > 0){
+        data.forEach((a, index) => {
+            let statusHtml = (a.status === 'present' || a.status === 'Present')
+                             ? `<span class="status-present">Hadir</span>`
+                             : a.status;
+            html += `
+            <tr>
+                <td>${index + 1}</td>
+                <td><img src="${a.profile_image}" alt="Profile"></td>
+                <td>${a.peserta_name}</td>
+                <td>${a.scanned_at}</td>
+                <td>${a.phone || '-'}</td>
+                <td>${a.email}</td>
+                <td>${statusHtml}</td>
+            </tr>`;
         });
-    </script>
+    } else {
+        html += `<tr><td colspan="7" style="text-align:center; padding:1rem; color:#9ca3af;">Tidak ada data yang sesuai dengan pencarian</td></tr>`;
+    }
+
+    html += '</tbody></table>';
+    document.getElementById('attendance-list').innerHTML = html;
+}
+</script>
 @endsection

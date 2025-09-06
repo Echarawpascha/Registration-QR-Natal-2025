@@ -100,4 +100,18 @@ class AdminAuthController extends Controller
 
         return redirect()->route('admin.settings')->with('success', 'Pengaturan berhasil diperbarui!');
     }
+
+    public function removeProfileImage()
+    {
+        $admin = Auth::guard('admin')->user();
+
+        if ($admin->profile_image && file_exists(public_path('storage/' . $admin->profile_image))) {
+            unlink(public_path('storage/' . $admin->profile_image));
+        }
+
+        $admin->profile_image = null;
+        $admin->save();
+
+        return redirect()->route('admin.settings')->with('success', 'Foto profil berhasil dihapus!');
+    }
 }

@@ -117,6 +117,20 @@ class PanitiaAuthController extends Controller
         return redirect()->route('panitia.settings')->with('success', 'Pengaturan berhasil diperbarui!');
     }
 
+    public function removeProfileImage()
+    {
+        $panitia = Auth::guard('panitia')->user();
+
+        if ($panitia->profile_image && file_exists(public_path('storage/' . $panitia->profile_image))) {
+            unlink(public_path('storage/' . $panitia->profile_image));
+        }
+
+        $panitia->profile_image = null;
+        $panitia->save();
+
+        return redirect()->route('panitia.settings')->with('success', 'Foto profil berhasil dihapus!');
+    }
+
     public function logout(Request $request)
     {
         Auth::guard('panitia')->logout();

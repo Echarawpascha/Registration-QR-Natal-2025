@@ -113,6 +113,20 @@ class PesertaAuthController extends Controller
         return redirect()->route('peserta.settings')->with('success', 'Pengaturan berhasil diperbarui!');
     }
 
+    public function removeProfileImage()
+    {
+        $peserta = Auth::guard('peserta')->user();
+
+        if ($peserta->profile_image && file_exists(public_path('storage/' . $peserta->profile_image))) {
+            unlink(public_path('storage/' . $peserta->profile_image));
+        }
+
+        $peserta->profile_image = null;
+        $peserta->save();
+
+        return redirect()->route('peserta.settings')->with('success', 'Foto profil berhasil dihapus!');
+    }
+
     public function logout(Request $request)
     {
         Auth::guard('peserta')->logout();

@@ -27,9 +27,9 @@
         </ul>
         <div class="profile-section">
             <button class="profile-button">
-                <img src="{{ Auth::guard('peserta')->user()->profile_image 
-                    ? asset('storage/' . Auth::guard('peserta')->user()->profile_image) 
-                    : 'https://via.placeholder.com/40x40/cccccc/666666?text=P' }}" 
+                <img src="{{ Auth::guard('peserta')->user()->profile_image
+                    ? asset('storage/' . Auth::guard('peserta')->user()->profile_image)
+                    : asset('storage/profile_images/profile.png') }}"
                     alt="Profile" class="profile-image">
                 <div class="profile-info">
                     <p class="name">{{ Auth::guard('peserta')->user()->name }}</p>

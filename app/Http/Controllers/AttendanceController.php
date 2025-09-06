@@ -99,6 +99,9 @@ class AttendanceController extends Controller
                     'peserta_name' => $attendance->peserta->name,
                     'scanned_at' => $attendance->scanned_at->format('H:i:s'),
                     'status' => $attendance->status,
+                    'profile_image' => $attendance->peserta->profile_image ? asset('storage/' . $attendance->peserta->profile_image) : asset('storage/profile_images/profile.png'),
+                    'phone' => $attendance->peserta->phone,
+                    'email' => $attendance->peserta->email,
                 ];
             })
         ]);

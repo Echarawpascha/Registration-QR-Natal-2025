@@ -33,15 +33,18 @@
 
             <div class="mb-4">
                 <label for="profile_image" class="block text-gray-700 text-sm font-bold mb-2">Foto Profil:</label>
-                @if($peserta->profile_image)
-                    <div class="mb-2">
-                        <img src="{{ asset('storage/' . $peserta->profile_image) }}" alt="Current Profile Image"
-                             class="w-20 h-20 rounded-full object-cover">
-                    </div>
-                @endif
+                <div class="mb-2">
+                    <img src="{{ $peserta->profile_image ? asset('storage/' . $peserta->profile_image) : asset('storage/profile_images/profile.png') }}" alt="Current Profile Image"
+                         class="w-20 h-20 rounded-full object-cover">
+                </div>
                 <input type="file" id="profile_image" name="profile_image" accept="image/*"
                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 <p class="text-sm text-gray-500 mt-1">Format: JPG, PNG, GIF. Maksimal 2MB.</p>
+                @if($peserta->profile_image)
+                    <button type="button" onclick="removeProfileImage()" class="mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-sm">
+                        Hapus Foto Profil
+                    </button>
+                @endif
             </div>
 
             <div class="flex items-center justify-between">
@@ -53,4 +56,23 @@
         </form>
     </div>
 </div>
+
+<script>
+function removeProfileImage() {
+    if (confirm('Apakah Anda yakin ingin menghapus foto profil?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '{{ route("peserta.removeProfileImage") }}';
+
+        const csrf = document.createElement('input');
+        csrf.type = 'hidden';
+        csrf.name = '_token';
+        csrf.value = '{{ csrf_token() }}';
+
+        form.appendChild(csrf);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
 @endsection
