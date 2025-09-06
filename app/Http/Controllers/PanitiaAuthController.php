@@ -84,6 +84,39 @@ class PanitiaAuthController extends Controller
         return view('panitia.pending');
     }
 
+    public function settings()
+    {
+        $panitia = Auth::guard('panitia')->user();
+        return view('panitia.settings', compact('panitia'));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $panitia = Auth::guard('panitia')->user();
+
+        $data = ['name' => $request->name];
+
+        if ($request->hasFile('profile_image')) {
+            // Delete old profile image if exists
+            if ($panitia->profile_image && file_exists(public_path('storage/' . $panitia->profile_image))) {
+                unlink(public_path('storage/' . $panitia->profile_image));
+            }
+
+            // Store new profile image
+            $imagePath = $request->file('profile_image')->store('profile_images', 'public');
+            $data['profile_image'] = $imagePath;
+        }
+
+        $panitia->update($data);
+
+        return redirect()->route('panitia.settings')->with('success', 'Pengaturan berhasil diperbarui!');
+    }
+
     public function logout(Request $request)
     {
         Auth::guard('panitia')->logout();

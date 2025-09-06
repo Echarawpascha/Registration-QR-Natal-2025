@@ -3,25 +3,44 @@
 <head>
     <title>Panitia - @yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    <script src="{{ asset('js/sidebar.js') }}" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="{{ route('panitia.dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ route('panitia.scan') }}">Scan</a></li>
-            <li><a href="{{ route('panitia.attendance-list') }}">Daftar Absensi Hari Ini</a></li>
-            <li><a href="{{ route('peserta.barcode') }}">Barcode Saya</a></li>
-            <li><a href="{{ route('panitia.logout') }}"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Christmas Registration</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{{ route('panitia.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="{{ route('panitia.scan') }}"><i class="fas fa-qrcode"></i> Scan</a></li>
+            <li><a href="{{ route('panitia.attendance-list') }}"><i class="fas fa-list"></i> Daftar Absensi Hari Ini</a></li>
         </ul>
-    </nav>
+        <div class="profile-section">
+            <button class="profile-button">
+                <img src="{{ Auth::guard('panitia')->user()->profile_image ? asset('storage/' . Auth::guard('panitia')->user()->profile_image) : 'https://via.placeholder.com/40x40/cccccc/666666?text=PN' }}" alt="Profile" class="profile-image">
+                <div class="profile-info">
+                    <p class="name">{{ Auth::guard('panitia')->user()->name }}</p>
+                    <p class="role">Panitia</p>
+                </div>
+                <i class="fas fa-chevron-down arrow"></i>
+            </button>
+            <div class="popup-menu">
+                <a href="{{ route('panitia.settings') }}"><i class="fas fa-cog"></i> Pengaturan</a>
+                <a href="{{ route('panitia.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+
+
+    </div>
 
     <form id="logout-form" action="{{ route('panitia.logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
 
-    <div class="content">
+    <div class="main-content">
         @yield('content')
     </div>
 </body>

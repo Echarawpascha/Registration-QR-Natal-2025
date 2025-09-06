@@ -2,22 +2,42 @@
 <html>
 <head>
     <title>Peserta - @yield('title')</title>
+    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
+    <script src="{{ asset('js/sidebar.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="{{ route('peserta.dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ route('peserta.barcode') }}">Barcode Saya</a></li>
-            <li><a href="{{ route('peserta.logout') }}"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h3>Christmas Registration</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="{{ route('peserta.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="{{ route('peserta.barcode') }}"><i class="fas fa-qrcode"></i> Barcode Saya</a></li>
         </ul>
-    </nav>
+        <div class="profile-section">
+            <button class="profile-button">
+                <img src="{{ Auth::guard('peserta')->user()->profile_image ? asset('storage/' . Auth::guard('peserta')->user()->profile_image) : 'https://via.placeholder.com/40x40/cccccc/666666?text=P' }}" alt="Profile" class="profile-image">
+                <div class="profile-info">
+                    <p class="name">{{ Auth::guard('peserta')->user()->name }}</p>
+                    <p class="role">Peserta</p>
+                </div>
+                <i class="fas fa-chevron-down arrow"></i>
+            </button>
+            <div class="popup-menu">
+                <a href="{{ route('peserta.settings') }}"><i class="fas fa-cog"></i> Pengaturan</a>
+                <a href="{{ route('peserta.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+
+
+    </div>
 
     <form id="logout-form" action="{{ route('peserta.logout') }}" method="POST" style="display: none;">
         @csrf
     </form>
 
-    <div class="content">
+    <div class="main-content">
         @yield('content')
     </div>
 </body>

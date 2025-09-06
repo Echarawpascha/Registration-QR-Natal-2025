@@ -1,0 +1,242 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: #f8f9fa;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 280px;
+  background-color: #ffffff;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+/* Header */
+.sidebar-header {
+  text-align: center;
+  padding: 20px 20px 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.sidebar-header h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+/* Menu */
+.sidebar-menu {
+  list-style: none;
+  padding: 0 16px;
+  flex-grow: 1;
+}
+
+.sidebar-menu li {
+  margin: 8px 0;
+}
+
+.sidebar-menu a {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  color: #6c757d;
+  transition: all 0.3s ease;
+  gap: 12px;
+}
+
+.sidebar-menu a:hover {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  transform: translateX(5px);
+}
+
+.sidebar-menu a i {
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
+/* Profile Section */
+.profile-section {
+  padding: 20px 16px;
+  border-top: 1px solid #e9ecef;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  position: relative;
+}
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.profile-button:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e3f2fd;
+}
+
+.profile-info {
+  flex: 1;
+  text-align: left;
+}
+
+.profile-info .name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.profile-info .role {
+  font-size: 12px;
+  color: #6c757d;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.profile-button .arrow {
+  font-size: 12px;
+  color: #6c757d;
+  transition: transform 0.3s ease;
+}
+
+.profile-button.active .arrow {
+  transform: rotate(180deg);
+}
+
+/* Popup Menu */
+.popup-menu {
+  position: absolute;
+  bottom: 100%;
+  left: 16px;
+  right: 16px;
+  margin-bottom: 10px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 1001;
+}
+
+.popup-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.popup-menu a {
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: #495057;
+  font-size: 14px;
+  gap: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.popup-menu a:hover {
+  background-color: #f8f9fa;
+}
+
+.popup-menu a:first-child {
+  border-radius: 12px 12px 0 0;
+}
+
+.popup-menu a:last-child {
+  border-radius: 0 0 12px 12px;
+  color: #dc3545;
+}
+
+.popup-menu a:only-child {
+  border-radius: 12px;
+}
+
+/* Main content */
+.main-content {
+  margin-left: 280px;
+  padding: 30px;
+  flex: 1;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+  }
+
+  .overlay.show {
+    display: block;
+  }
+}

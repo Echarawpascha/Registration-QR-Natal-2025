@@ -80,6 +80,39 @@ class PesertaAuthController extends Controller
         return view('peserta.barcode', compact('peserta'));
     }
 
+    public function settings()
+    {
+        $peserta = Auth::guard('peserta')->user();
+        return view('peserta.settings', compact('peserta'));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $peserta = Auth::guard('peserta')->user();
+
+        $data = ['name' => $request->name];
+
+        if ($request->hasFile('profile_image')) {
+            // Delete old profile image if exists
+            if ($peserta->profile_image && file_exists(public_path('storage/' . $peserta->profile_image))) {
+                unlink(public_path('storage/' . $peserta->profile_image));
+            }
+
+            // Store new profile image
+            $imagePath = $request->file('profile_image')->store('profile_images', 'public');
+            $data['profile_image'] = $imagePath;
+        }
+
+        $peserta->update($data);
+
+        return redirect()->route('peserta.settings')->with('success', 'Pengaturan berhasil diperbarui!');
+    }
+
     public function logout(Request $request)
     {
         Auth::guard('peserta')->logout();

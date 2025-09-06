@@ -10,7 +10,7 @@ class Panitia extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'address', 'approval_status', 'barcode'
+        'name', 'email', 'password', 'phone', 'address', 'approval_status', 'barcode', 'profile_image'
     ];
 
     protected $hidden = [

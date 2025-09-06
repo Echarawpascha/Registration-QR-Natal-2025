@@ -67,4 +67,37 @@ class AdminAuthController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('admin.login');
     }
+
+    public function settings()
+    {
+        $admin = Auth::guard('admin')->user();
+        return view('admin.settings', compact('admin'));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $admin = Auth::guard('admin')->user();
+
+        $data = ['name' => $request->name];
+
+        if ($request->hasFile('profile_image')) {
+            // Delete old profile image if exists
+            if ($admin->profile_image && file_exists(public_path('storage/' . $admin->profile_image))) {
+                unlink(public_path('storage/' . $admin->profile_image));
+            }
+
+            // Store new profile image
+            $imagePath = $request->file('profile_image')->store('profile_images', 'public');
+            $data['profile_image'] = $imagePath;
+        }
+
+        $admin->update($data);
+
+        return redirect()->route('admin.settings')->with('success', 'Pengaturan berhasil diperbarui!');
+    }
 }

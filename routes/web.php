@@ -5,6 +5,11 @@ use App\Http\Controllers\PanitiaAuthController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AdminAuthController;
 
+// Welcome page - role selection
+Route::get('/', function () {
+    return view('welcome');
+})->name('welcome');
+
 Route::prefix('peserta')->group(function () {
     Route::get('register', [PesertaAuthController::class, 'showRegisterForm'])->name('peserta.register');
     Route::post('register', [PesertaAuthController::class, 'register']);
@@ -13,6 +18,8 @@ Route::prefix('peserta')->group(function () {
     Route::middleware('auth:peserta')->group(function () {
         Route::get('dashboard', [PesertaAuthController::class, 'dashboard'])->name('peserta.dashboard');
         Route::get('barcode', [PesertaAuthController::class, 'barcode'])->name('peserta.barcode');
+        Route::get('settings', [PesertaAuthController::class, 'settings'])->name('peserta.settings');
+        Route::post('settings', [PesertaAuthController::class, 'updateSettings'])->name('peserta.updateSettings');
         Route::post('logout', [PesertaAuthController::class, 'logout'])->name('peserta.logout');
     });
 });
@@ -25,6 +32,8 @@ Route::prefix('panitia')->group(function () {
     Route::get('pending', [PanitiaAuthController::class, 'pending'])->name('panitia.pending');
     Route::middleware('auth:panitia')->group(function () {
         Route::get('dashboard', [PanitiaAuthController::class, 'dashboard'])->name('panitia.dashboard');
+        Route::get('settings', [PanitiaAuthController::class, 'settings'])->name('panitia.settings');
+        Route::post('settings', [PanitiaAuthController::class, 'updateSettings'])->name('panitia.updateSettings');
         Route::post('logout', [PanitiaAuthController::class, 'logout'])->name('panitia.logout');
 
         // Attendance routes
@@ -41,6 +50,8 @@ Route::prefix('admin')->group(function () {
     Route::post('login', [AdminAuthController::class, 'login']);
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [AdminAuthController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('settings', [AdminAuthController::class, 'settings'])->name('admin.settings');
+        Route::post('settings', [AdminAuthController::class, 'updateSettings'])->name('admin.updateSettings');
         Route::post('panitia/{id}/approve', [AdminAuthController::class, 'approvePanitia'])->name('admin.approve-panitia');
         Route::post('panitia/{id}/reject', [AdminAuthController::class, 'rejectPanitia'])->name('admin.reject-panitia');
         Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
