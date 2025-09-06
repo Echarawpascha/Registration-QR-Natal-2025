@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Dashboard</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .section { margin-bottom: 30px; }
-        .panitia-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; }
-        .pending { background-color: #fff3cd; }
-        .approved { background-color: #d4edda; }
-        .rejected { background-color: #f8d7da; }
-        button { padding: 5px 10px; margin-right: 5px; cursor: pointer; }
-        .approve { background: #28a745; color: white; border: none; }
-        .reject { background: #dc3545; color: white; border: none; }
-        .success { color: green; }
-    </style>
-</head>
-<body>
+@extends('layouts.admin')
+
+@section('title', 'Dashboard')
+
+@section('content')
     <h1>Admin Dashboard</h1>
     <p>Selamat datang, {{ $admin->name }}</p>
 
@@ -65,9 +52,15 @@
         @endif
     </div>
 
-    <form method="POST" action="{{ route('admin.logout') }}">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
-</body>
-</html>
+    <style>
+        .section { margin-bottom: 30px; }
+        .panitia-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; }
+        .pending { background-color: #fff3cd; }
+        .approved { background-color: #d4edda; }
+        .rejected { background-color: #f8d7da; }
+        button { padding: 5px 10px; margin-right: 5px; cursor: pointer; }
+        .approve { background: #28a745; color: white; border: none; }
+        .reject { background: #dc3545; color: white; border: none; }
+        .success { color: green; }
+    </style>
+@endsection

@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard Peserta</title>
-</head>
-<body>
+@extends('layouts.peserta')
+
+@section('title', 'Dashboard')
+
+@section('content')
     <h1>Selamat datang, {{ $peserta->name }}</h1>
 
     <p>Email: {{ $peserta->email }}</p>
@@ -30,10 +29,4 @@
     @endif
 
     <p><strong>Catatan:</strong> Pastikan package simplesoftwareio/simple-qrcode sudah terinstall untuk menampilkan barcode QR Code.</p>
-
-    <form method="POST" action="{{ route('peserta.logout') }}">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
-</body>
-</html>
+@endsection

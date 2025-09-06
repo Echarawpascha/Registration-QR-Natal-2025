@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
+    public function showScanForm()
+    {
+        return view('panitia.scan');
+    }
+
     public function scanBarcode(Request $request)
     {
         $request->validate([
@@ -97,5 +102,10 @@ class AttendanceController extends Controller
                 ];
             })
         ]);
+    }
+
+    public function showAttendanceList()
+    {
+        return view('panitia.attendance-list');
     }
 }

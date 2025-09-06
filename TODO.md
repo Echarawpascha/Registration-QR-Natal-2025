@@ -12,6 +12,7 @@
 - [x] Create panitia/register.blade.php
 - [x] Create panitia/dashboard.blade.php
 - [x] Create panitia/pending.blade.php
+- [x] Update all views to extend proper layouts with navbars
 
 ## Phase 3: Attendance System
 - [x] Create Attendance model
@@ -27,8 +28,8 @@
 - [x] Update panitia registration to require approval
 
 ## Testing
-- [x] Test panitia registration flow
-- [x] Test panitia login
-- [x] Test barcode scanning
-- [x] Test attendance tracking
-- [x] Test admin approval workflow
+- [ ] Test panitia registration flow
+- [ ] Test panitia login
+- [ ] Test barcode scanning
+- [ ] Test attendance tracking
+- [ ] Test admin approval workflow

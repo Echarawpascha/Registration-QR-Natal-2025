@@ -12,6 +12,7 @@ Route::prefix('peserta')->group(function () {
     Route::post('login', [PesertaAuthController::class, 'login']);
     Route::middleware('auth:peserta')->group(function () {
         Route::get('dashboard', [PesertaAuthController::class, 'dashboard'])->name('peserta.dashboard');
+        Route::get('barcode', [PesertaAuthController::class, 'barcode'])->name('peserta.barcode');
         Route::post('logout', [PesertaAuthController::class, 'logout'])->name('peserta.logout');
     });
 });
@@ -27,8 +28,10 @@ Route::prefix('panitia')->group(function () {
         Route::post('logout', [PanitiaAuthController::class, 'logout'])->name('panitia.logout');
 
         // Attendance routes
-        Route::post('scan', [AttendanceController::class, 'scanBarcode'])->name('panitia.scan');
+        Route::get('scan', [AttendanceController::class, 'showScanForm'])->name('panitia.scan');
+        Route::post('scan', [AttendanceController::class, 'scanBarcode'])->name('panitia.scan.post');
         Route::get('attendances/today', [AttendanceController::class, 'getTodayAttendances'])->name('panitia.attendances.today');
+        Route::get('attendance-list', [AttendanceController::class, 'showAttendanceList'])->name('panitia.attendance-list');
     });
 });
 

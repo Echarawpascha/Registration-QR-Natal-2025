@@ -9,7 +9,9 @@
     <nav>
         <ul>
             <li><a href="{{ route('panitia.dashboard') }}">Dashboard</a></li>
-            <!-- Removed Pending Approval link from Panitia layout -->
+            <li><a href="{{ route('panitia.scan') }}">Scan</a></li>
+            <li><a href="{{ route('panitia.attendance-list') }}">Daftar Absensi Hari Ini</a></li>
+            <li><a href="{{ route('peserta.barcode') }}">Barcode Saya</a></li>
             <li><a href="{{ route('panitia.logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
         </ul>

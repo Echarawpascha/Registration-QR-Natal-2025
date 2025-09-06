@@ -72,6 +72,14 @@ class PesertaAuthController extends Controller
         return view('peserta.dashboard', compact('peserta'));
     }
 
+    public function barcode()
+    {
+        $peserta = Auth::guard('peserta')->user();
+        // Refresh peserta data to get latest is_confirmed status after scanning
+        $peserta->refresh();
+        return view('peserta.barcode', compact('peserta'));
+    }
+
     public function logout(Request $request)
     {
         Auth::guard('peserta')->logout();

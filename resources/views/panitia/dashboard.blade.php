@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard Panitia</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-</head>
-<body>
+@extends('layouts.panitia')
+
+@section('title', 'Dashboard')
+
+@section('content')
     <h1>Selamat datang, {{ $panitia->name }}</h1>
 
     <p>Email: {{ $panitia->email }}</p>
@@ -140,10 +137,4 @@
     <h3>Barcode Anda:</h3>
     {!! DNS2D::getBarcodeSVG($panitia->barcode, 'QRCODE', 4, 4) !!}
     <p>Kode Barcode: {{ $panitia->barcode }}</p>
-
-    <form method="POST" action="{{ route('panitia.logout') }}" style="margin-top: 30px;">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
-</body>
-</html>
+@endsection

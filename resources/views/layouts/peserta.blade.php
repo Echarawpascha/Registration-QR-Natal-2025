@@ -7,6 +7,7 @@
     <nav>
         <ul>
             <li><a href="{{ route('peserta.dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ route('peserta.barcode') }}">Barcode Saya</a></li>
             <li><a href="{{ route('peserta.logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
         </ul>
