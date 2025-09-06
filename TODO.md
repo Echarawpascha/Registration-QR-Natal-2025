@@ -1,9 +1,10 @@
-- [x] Update resources/views/layouts/peserta.blade.php to use default profile image
-- [x] Update resources/views/peserta/settings.blade.php to always show profile image and add remove button
-- [x] Update app/Http/Controllers/PesertaAuthController.php to add removeProfileImage method
-- [x] Add route for removing profile image in routes/web.php
-- [x] Update resources/views/layouts/panitia.blade.php to use default profile image
-- [x] Update resources/views/panitia/settings.blade.php similarly
-- [x] Update PanitiaAuthController for remove profile image
-- [x] Update Admin layouts and controllers similarly
-- [x] Test the implementation
+# TODO: Add PDF Download for Attendance List and Ensure Real-Time Scan Time
+
+## Steps to Complete
+
+- [x] Install barryvdh/laravel-dompdf package (composer require barryvdh/laravel-dompdf)
+- [x] Add route for PDF download in routes/web.php
+- [x] Add downloadPdf method in AttendanceController.php
+- [x] Update attendance-list.blade.php to add download button
+- [x] Set timezone to Asia/Jakarta for real-time scan time
+- [x] Test the PDF download functionality (confirmed working by user)

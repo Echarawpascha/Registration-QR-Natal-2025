@@ -43,6 +43,7 @@ Route::prefix('panitia')->group(function () {
         Route::post('scan', [AttendanceController::class, 'scanBarcode'])->name('panitia.scan.post');
         Route::get('attendances/today', [AttendanceController::class, 'getTodayAttendances'])->name('panitia.attendances.today');
         Route::get('attendance-list', [AttendanceController::class, 'showAttendanceList'])->name('panitia.attendance-list');
+        Route::get('attendance-list/download-pdf', [AttendanceController::class, 'downloadPdf'])->name('panitia.attendance-list.download-pdf');
     });
 });
 

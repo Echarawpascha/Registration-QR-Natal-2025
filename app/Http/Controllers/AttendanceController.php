@@ -111,4 +111,29 @@ class AttendanceController extends Controller
     {
         return view('panitia.attendance-list');
     }
+
+    public function downloadPdf()
+    {
+        $panitia = Auth::guard('panitia')->user();
+
+        $attendances = Attendance::with('peserta')
+            ->where('panitia_id', $panitia->id)
+            ->whereDate('event_date', today())
+            ->orderBy('scanned_at', 'desc')
+            ->get();
+
+        $data = $attendances->map(function ($attendance) {
+            return [
+                'peserta_name' => $attendance->peserta->name,
+                'scanned_at' => $attendance->scanned_at->format('H:i:s'),
+                'status' => $attendance->status,
+                'phone' => $attendance->peserta->phone,
+                'email' => $attendance->peserta->email,
+            ];
+        });
+
+        $pdf = \PDF::loadView('panitia.attendance-pdf', compact('data'));
+
+        return $pdf->download('daftar_absensi_hari_ini_' . now()->format('Y-m-d') . '.pdf');
+    }
 }
