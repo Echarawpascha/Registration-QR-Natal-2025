@@ -28,10 +28,7 @@
         </div>
 
         <div id="attendance-list">
-            <div class="loading">
-                <div class="pulse"></div>
-                <p>Memuat data absensi...</p>
-            </div>
+            <!-- Loading message removed to prevent continuous display -->
         </div>
     </div>
 </div>
@@ -97,24 +94,7 @@
     color: #9ca3af;
 }
 
-/* Loading */
-.loading {
-    text-align: center;
-    padding: 2rem 0;
-    color: #9ca3af;
-}
-.loading .pulse {
-    height: 1rem;
-    width: 70%;
-    margin: 0 auto 0.5rem auto;
-    background: #e5e7eb;
-    border-radius: 9999px;
-    animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-}
+
 
 /* Tabel */
 .attendance-table {
@@ -216,9 +196,14 @@ function loadTodayAttendances() {
             // Store original data for search functionality
             originalData = data.data;
             renderTable(data.data);
+        } else {
+            document.getElementById('attendance-list').innerHTML = '<p style="text-align:center; color:red;">Gagal memuat data absensi.</p>';
         }
     })
-    .catch(console.error);
+    .catch(error => {
+        console.error(error);
+        document.getElementById('attendance-list').innerHTML = '<p style="text-align:center; color:red;">Terjadi kesalahan saat memuat data absensi.</p>';
+    });
 }
 
 let originalData = [];
@@ -257,30 +242,32 @@ function renderTable(data) {
                 <th>Waktu Scan</th>
                 <th>Nomor Telepon</th>
                 <th>Email</th>
+                <th>Asal Gereja</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody>`;
 
-    if(data.length > 0){
-        data.forEach((a, index) => {
-            let statusHtml = (a.status === 'present' || a.status === 'Present')
-                             ? `<span class="status-present">Hadir</span>`
-                             : a.status;
-            html += `
-            <tr>
-                <td>${index + 1}</td>
-                <td><img src="${a.profile_image}" alt="Profile"></td>
-                <td>${a.peserta_name}</td>
-                <td>${a.scanned_at}</td>
-                <td>${a.phone || '-'}</td>
-                <td>${a.email}</td>
-                <td>${statusHtml}</td>
-            </tr>`;
-        });
-    } else {
-        html += `<tr><td colspan="7" style="text-align:center; padding:1rem; color:#9ca3af;">Tidak ada data yang sesuai dengan pencarian</td></tr>`;
-    }
+            if(data.length > 0){
+                data.forEach((a, index) => {
+                    let statusHtml = (a.status === 'present' || a.status === 'Present')
+                                     ? `<span class="status-present">Hadir</span>`
+                                     : a.status;
+                    html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><img src="${a.profile_image}" alt="Profile"></td>
+                        <td>${a.peserta_name}</td>
+                        <td>${a.scanned_at}</td>
+                        <td>${a.phone || '-'}</td>
+                        <td>${a.email}</td>
+                        <td>${a.church_origin || '-'}</td>
+                        <td>${statusHtml}</td>
+                    </tr>`;
+                });
+            } else {
+                html += `<tr><td colspan="8" style="text-align:center; padding:1rem; color:#9ca3af;">Tidak ada data yang sesuai dengan pencarian</td></tr>`;
+            }
 
     html += '</tbody></table>';
     document.getElementById('attendance-list').innerHTML = html;

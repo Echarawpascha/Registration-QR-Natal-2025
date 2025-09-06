@@ -44,6 +44,7 @@
                 <th>Waktu Scan</th>
                 <th>Nomor Telepon</th>
                 <th>Email</th>
+                <th>Asal Gereja</th>
                 <th>Status</th>
             </tr>
         </thead>
@@ -55,6 +56,7 @@
                 <td>{{ $attendance['scanned_at'] }}</td>
                 <td>{{ $attendance['phone'] ?: '-' }}</td>
                 <td>{{ $attendance['email'] }}</td>
+                <td>{{ $attendance['church_origin'] ?: '-' }}</td>
                 <td>
                     @if($attendance['status'] === 'present')
                         <span class="status-present">Hadir</span>
@@ -65,7 +67,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="6" style="text-align: center;">Tidak ada data absensi hari ini.</td>
+                <td colspan="7" style="text-align: center;">Tidak ada data absensi hari ini.</td>
             </tr>
             @endforelse
         </tbody>

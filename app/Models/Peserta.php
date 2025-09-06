@@ -7,7 +7,7 @@ class Peserta extends Authenticatable
 {
     use Notifiable;
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'address', 'is_confirmed', 'barcode', 'profile_image'
+        'name', 'email', 'password', 'phone', 'address', 'church_origin', 'is_confirmed', 'barcode', 'profile_image'
     ];
     protected $hidden = [
         'password',

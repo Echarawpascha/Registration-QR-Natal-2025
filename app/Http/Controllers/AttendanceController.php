@@ -84,10 +84,7 @@ class AttendanceController extends Controller
 
     public function getTodayAttendances()
     {
-        $panitia = Auth::guard('panitia')->user();
-
         $attendances = Attendance::with('peserta')
-            ->where('panitia_id', $panitia->id)
             ->whereDate('event_date', today())
             ->orderBy('scanned_at', 'desc')
             ->get();
@@ -102,6 +99,7 @@ class AttendanceController extends Controller
                     'profile_image' => $attendance->peserta->profile_image ? asset('storage/' . $attendance->peserta->profile_image) : asset('storage/profile_images/profile.png'),
                     'phone' => $attendance->peserta->phone,
                     'email' => $attendance->peserta->email,
+                    'church_origin' => $attendance->peserta->church_origin,
                 ];
             })
         ]);
@@ -114,10 +112,7 @@ class AttendanceController extends Controller
 
     public function downloadPdf()
     {
-        $panitia = Auth::guard('panitia')->user();
-
         $attendances = Attendance::with('peserta')
-            ->where('panitia_id', $panitia->id)
             ->whereDate('event_date', today())
             ->orderBy('scanned_at', 'desc')
             ->get();
@@ -129,6 +124,7 @@ class AttendanceController extends Controller
                 'status' => $attendance->status,
                 'phone' => $attendance->peserta->phone,
                 'email' => $attendance->peserta->email,
+                'church_origin' => $attendance->peserta->church_origin,
             ];
         });
 

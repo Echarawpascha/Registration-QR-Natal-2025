@@ -22,6 +22,7 @@ class PesertaAuthController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
+            'church_origin' => 'required|string|max:255',
         ]);
 
         // Generate barcode string unik (misal UUID)
@@ -33,6 +34,7 @@ class PesertaAuthController extends Controller
             'password' => $request->password,
             'phone' => $request->phone,
             'address' => $request->address,
+            'church_origin' => $request->church_origin,
             'barcode' => $barcode,
             'is_confirmed' => false, // set to false initially, will be confirmed after scanning
         ]);
