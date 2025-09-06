@@ -33,7 +33,7 @@
         <label>Telepon:</label><br>
         <input type="text" name="phone" value="{{ old('phone') }}"><br>
 
-        <label>Alamat:</label><br>
+        <label>Keterangan:</label><br>
         <textarea name="address">{{ old('address') }}</textarea><br>
 
         <button type="submit">Daftar</button>
