@@ -9,15 +9,28 @@
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <h3>Christmas Registration</h3>
+            <h1>Christmas Registration</h1>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="{{ route('peserta.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="{{ route('peserta.barcode') }}"><i class="fas fa-qrcode"></i> Barcode Saya</a></li>
+            <li>
+                <a href="{{ route('peserta.dashboard') }}" 
+                   class="{{ request()->routeIs('peserta.dashboard') ? 'active' : '' }}">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('peserta.barcode') }}" 
+                   class="{{ request()->routeIs('peserta.barcode') ? 'active' : '' }}">
+                    <i class="fas fa-qrcode"></i> Barcode Saya
+                </a>
+            </li>
         </ul>
         <div class="profile-section">
             <button class="profile-button">
-                <img src="{{ Auth::guard('peserta')->user()->profile_image ? asset('storage/' . Auth::guard('peserta')->user()->profile_image) : 'https://via.placeholder.com/40x40/cccccc/666666?text=P' }}" alt="Profile" class="profile-image">
+                <img src="{{ Auth::guard('peserta')->user()->profile_image 
+                    ? asset('storage/' . Auth::guard('peserta')->user()->profile_image) 
+                    : 'https://via.placeholder.com/40x40/cccccc/666666?text=P' }}" 
+                    alt="Profile" class="profile-image">
                 <div class="profile-info">
                     <p class="name">{{ Auth::guard('peserta')->user()->name }}</p>
                     <p class="role">Peserta</p>
@@ -26,11 +39,12 @@
             </button>
             <div class="popup-menu">
                 <a href="{{ route('peserta.settings') }}"><i class="fas fa-cog"></i> Pengaturan</a>
-                <a href="{{ route('peserta.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="{{ route('peserta.logout') }}" 
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                   <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
             </div>
         </div>
-
-
     </div>
 
     <form id="logout-form" action="{{ route('peserta.logout') }}" method="POST" style="display: none;">

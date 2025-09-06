@@ -14,9 +14,24 @@
             <h3>Christmas Registration</h3>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="{{ route('panitia.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="{{ route('panitia.scan') }}"><i class="fas fa-qrcode"></i> Scan</a></li>
-            <li><a href="{{ route('panitia.attendance-list') }}"><i class="fas fa-list"></i> Daftar Absensi Hari Ini</a></li>
+            <li>
+                <a href="{{ route('panitia.dashboard') }}" 
+                   class="{{ Request::routeIs('panitia.dashboard') ? 'active' : '' }}">
+                   <i class="fas fa-home"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('panitia.scan') }}" 
+                   class="{{ Request::routeIs('panitia.scan') ? 'active' : '' }}">
+                   <i class="fas fa-qrcode"></i> Scan
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('panitia.attendance-list') }}" 
+                   class="{{ Request::routeIs('panitia.attendance-list') ? 'active' : '' }}">
+                   <i class="fas fa-list"></i> Daftar Absensi Hari Ini
+                </a>
+            </li>
         </ul>
         <div class="profile-section">
             <button class="profile-button">
@@ -29,11 +44,12 @@
             </button>
             <div class="popup-menu">
                 <a href="{{ route('panitia.settings') }}"><i class="fas fa-cog"></i> Pengaturan</a>
-                <a href="{{ route('panitia.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="{{ route('panitia.logout') }}" 
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                   <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
             </div>
         </div>
-
-
     </div>
 
     <form id="logout-form" action="{{ route('panitia.logout') }}" method="POST" style="display: none;">

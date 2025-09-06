@@ -12,7 +12,12 @@
             <h3>Christmas Registration</h3>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li>
+                <a href="{{ route('admin.dashboard') }}" 
+                   class="{{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
+                   <i class="fas fa-home"></i> Dashboard
+                </a>
+            </li>
         </ul>
         <div class="profile-section">
             <button class="profile-button">
@@ -24,8 +29,13 @@
                 <i class="fas fa-chevron-down arrow"></i>
             </button>
             <div class="popup-menu">
-                <a href="{{ route('admin.settings') }}"><i class="fas fa-cog"></i> Pengaturan</a>
-                <a href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a href="{{ route('admin.settings') }}">
+                    <i class="fas fa-cog"></i> Pengaturan
+                </a>
+                <a href="{{ route('admin.logout') }}" 
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                   <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
             </div>
         </div>
     </div>
