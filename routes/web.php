@@ -4,11 +4,16 @@ use App\Http\Controllers\PesertaAuthController;
 use App\Http\Controllers\PanitiaAuthController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\UniversalAuthController;
 
 // Welcome page - role selection
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+// Universal login
+Route::get('/login', [UniversalAuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [UniversalAuthController::class, 'login']);
 
 Route::prefix('peserta')->group(function () {
     Route::get('register', [PesertaAuthController::class, 'showRegisterForm'])->name('peserta.register');

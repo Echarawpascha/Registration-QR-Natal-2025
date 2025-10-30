@@ -56,9 +56,7 @@
         <h1><i class="fas fa-tree-christmas"></i> Christmas Registration 2025</h1>
         <p>Pilih jenis login untuk memulai:</p>
         <div class="btn-group">
-            <a href="{{ route('peserta.login') }}" class="btn"><i class="fas fa-user"></i> Login sebagai Peserta</a>
-            <a href="{{ route('panitia.login') }}" class="btn"><i class="fas fa-users-cog"></i> Login sebagai Panitia</a>
-            <a href="{{ route('admin.login') }}" class="btn"><i class="fas fa-user-shield"></i> Login sebagai Admin</a>
+            <a href="{{ route('login') }}" class="btn"><i class="fas fa-sign-in-alt"></i> Login</a>
         </div>
     </div>
 </body>

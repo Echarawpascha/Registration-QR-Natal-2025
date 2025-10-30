@@ -1,4 +1,4 @@
-@extends('layouts.panitia')
+@extends('layouts.app')
 
 @section('title', 'Daftar Absensi')
 

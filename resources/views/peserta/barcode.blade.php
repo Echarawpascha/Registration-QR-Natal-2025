@@ -1,4 +1,4 @@
-@extends('layouts.peserta')
+@extends('layouts.app')
 
 @section('title', 'Barcode Peserta')
 
